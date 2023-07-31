@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
 import { TETROMINOS, randomTetromino } from '../tetrominos';
-import { STAGE_WIDTH } from '../gameHelpers';
+import { STAGE_WIDTH, checkCollision } from '../gameHelpers';
 
 export const usePlayer = () => {
     const [player, setPlayer] = useState({
@@ -21,6 +21,18 @@ export const usePlayer = () => {
     const playerRotate = ( stage, dir)=>{
         const clone = JSON.parse(JSON.stringify(player));
         clone.tetromino = rotate(clone.tetromino, dir);
+
+        const pos =clone.pos.x;
+        let offset=1;
+        while(checkCollision(clone, stage, {x:0, y:0})){
+            clone.pos.x += offset;
+            offset =-(offset +(offset>0 ? 1 : -1));
+            if(offset > clone.tetromino[0].length){
+                rotate(clone.tetromino, -dir);
+                clone.pos.x = pos;
+                return;
+            }
+        }
 
         setPlayer(clone);
     }

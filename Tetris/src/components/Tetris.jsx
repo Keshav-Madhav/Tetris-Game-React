@@ -50,19 +50,19 @@ function Tetris() {
 
     const move = ({keyCode})=>{
         if(!gameOver){
-            if(keyCode === 37 || keyCode === 65){ //left arr or a
+            if(keyCode === 37 || keyCode === 65){ //left arr or a to move left
                 movePlayer(-1); 
             } 
-            else if(keyCode === 39 || keyCode === 68){ //right arr or d
+            else if(keyCode === 39 || keyCode === 68){ //right arr or d to move right
                 movePlayer(1);
             }
-            else if(keyCode === 40 || keyCode === 83){ //down arr or d
+            else if(keyCode === 40 || keyCode === 83){ //down arr or d to drop
                 dropPlayer();
             }
-            else if(keyCode === 78 || keyCode === 81){ // n or q to rotate
+            else if(keyCode === 78 || keyCode === 81){ // n or q to rotate to anti clock rotate
                 playerRotate(stage, 1);
             }
-            else if(keyCode === 77 || keyCode === 69){ // m or e to rotate
+            else if(keyCode === 77 || keyCode === 69){ // m or e to rotate to clock rotate
                 playerRotate(stage, -1);
             }
         }
