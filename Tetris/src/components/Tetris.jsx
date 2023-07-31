@@ -32,9 +32,9 @@ function Tetris() {
         setStage(createStage());
         resetPlayer();
         setGameOver(false);
-        setScore=0;
-        setRows=0;
-        setLevel=0;
+        setScore(0);
+        setRows(0);
+        setLevel(0);
     }
 
     const drop = ()=>{
