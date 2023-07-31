@@ -13,8 +13,8 @@ import { useStage } from '../hooks/useStage';
 function Tetris() {
     const [dropTime, setDropTime] = useState(null);
     const [gameOver, setGameOver] = useState(false);
-    const [player, updatePlayerPos, resetPlayer] = usePlayer();
-    const [stage, setStage] = useStage(player ,resetPlayer);
+    const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
+    const [stage, setStage] = useStage(player, resetPlayer);
 
     console.log('re-render');
 
@@ -50,14 +50,20 @@ function Tetris() {
 
     const move = ({keyCode})=>{
         if(!gameOver){
-            if(keyCode === 37){
-                movePlayer(-1);
+            if(keyCode === 37 || keyCode === 65){ //left arr or a
+                movePlayer(-1); 
             } 
-            else if(keyCode === 39){
+            else if(keyCode === 39 || keyCode === 68){ //right arr or d
                 movePlayer(1);
             }
-            else if(keyCode === 40){
+            else if(keyCode === 40 || keyCode === 83){ //down arr or d
                 dropPlayer();
+            }
+            else if(keyCode === 78 || keyCode === 81){ // n or q to rotate
+                playerRotate(stage, 1);
+            }
+            else if(keyCode === 77 || keyCode === 69){ // m or e to rotate
+                playerRotate(stage, -1);
             }
         }
     }
