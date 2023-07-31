@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Stage from './Stage';
 import Display from './Display';
 import StartButton from './StartButton';
+import NextTetromino from './NextTetromino';
 
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
 import { checkCollision, createStage } from '../gameHelpers';
@@ -15,7 +16,7 @@ import { useGameStatus } from '../hooks/useGameStatus';
 function Tetris() {
     const [dropTime, setDropTime] = useState(null);
     const [gameOver, setGameOver] = useState(false);
-    const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
+    const [player, updatePlayerPos, resetPlayer, playerRotate, nextTetromino] = usePlayer();
     const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
     const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared);
 
@@ -109,6 +110,8 @@ function Tetris() {
                     )}
                     
                     <StartButton callBack={startGame}/>
+
+                    <NextTetromino nextTetromino={nextTetromino}/>
                 </aside>
             </StyledTetris>
         </StyledTetrisWrapper>
