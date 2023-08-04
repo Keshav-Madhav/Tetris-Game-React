@@ -3,6 +3,7 @@ import Stage from './Stage';
 import Display from './Display';
 import StartButton from './StartButton';
 import NextTetromino from './NextTetromino';
+import TouchHandler from '../TouchHandler';
 
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
 import { checkCollision, createStage } from '../gameHelpers';
@@ -96,8 +97,9 @@ function Tetris() {
 
     return (
         <StyledTetrisWrapper role="button" tabIndex ="0" onKeyDown={e=>move(e)} onKeyUp={keyup}>
+            {/*<TouchHandler onSwipeLeft={() => movePlayer(-1)} onSwipeRight={() => movePlayer(1)} onSwipeDown={dropPlayer} onTap={playerRotate}/>*/}
             <StyledTetris>
-                <Stage stage={stage}/>
+                <Stage stage={stage}/>  
                 <aside>
                     {gameOver ? (
                         <Display gameOver={gameOver} text="Game OVer"/>
