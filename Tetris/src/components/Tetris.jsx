@@ -3,6 +3,7 @@ import Stage from './Stage';
 import Display from './Display';
 import StartButton from './StartButton';
 import NextTetromino from './NextTetromino';
+import {StyledPauseMessage} from './styles/StyledPauseMessage';
 import TouchHandler from '../TouchHandler';
 
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
@@ -21,7 +22,16 @@ function Tetris() {
     const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
     const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared);
 
-    console.log('re-render');
+    const [isPaused, setIsPaused] = useState(false);
+
+    const togglePause = () => {
+    setIsPaused(!isPaused);
+    if (isPaused) {
+        setDropTime(1000 / (level + 1) + 200);
+    } else {
+        setDropTime(null);
+    }
+    };
 
     const movePlayer = dir =>{
         if(!checkCollision(player, stage, {x: dir, y:0})){
@@ -73,7 +83,10 @@ function Tetris() {
 
     const move = ({keyCode})=>{
         if(!gameOver){
-            if(keyCode === 37 || keyCode === 65){ //left arr or a to move left
+            if (keyCode === 80) { // 'P' key to pause/unpause
+                togglePause();
+            } 
+            else if(keyCode === 37 || keyCode === 65){ //left arr or a to move left
                 movePlayer(-1); 
             } 
             else if(keyCode === 39 || keyCode === 68){ //right arr or d to move right
@@ -91,8 +104,10 @@ function Tetris() {
         }
     }
 
-    useInterval(()=>{
-        drop();
+    useInterval(() => {
+        if (!isPaused) {
+            drop();
+        }
     }, dropTime);
 
     return (
@@ -112,6 +127,8 @@ function Tetris() {
                     )}
                     
                     <StartButton callBack={startGame}/>
+
+                    {isPaused && <StyledPauseMessage>Paused</StyledPauseMessage>}
 
                     <NextTetromino nextTetromino={nextTetromino}/>
                 </aside>
